@@ -40,27 +40,29 @@ const Dashboard = () => {
   ];
 
   const recentActivity = [
-    { student: "Alice Johnson", class: "Grade 10-A", status: "absent", time: "2 hours ago" },
-    { student: "Michael Chen", class: "Grade 9-B", status: "late", time: "3 hours ago" },
-    { student: "Sarah Williams", class: "Grade 11-C", status: "present", time: "4 hours ago" },
-    { student: "David Brown", class: "Grade 10-B", status: "absent", time: "5 hours ago" },
+    { student: "Alice Johnson", class: "Class 10", status: "absent", time: "2 hours ago" },
+    { student: "Michael Chen", class: "Class 9", status: "late", time: "3 hours ago" },
+    { student: "Sarah Williams", class: "Class 8", status: "present", time: "4 hours ago" },
+    { student: "David Brown", class: "Class 7", status: "absent", time: "5 hours ago" },
+    { student: "Priya Sharma", class: "Class 6", status: "present", time: "6 hours ago" },
+    { student: "Rahul Patel", class: "Class 5", status: "late", time: "7 hours ago" },
   ];
 
   return (
     <div className="min-h-screen bg-gradient-subtle p-6">
       <div className="mx-auto max-w-7xl space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">Student Management Dashboard</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Student Management Dashboard</h1>
             <p className="text-muted-foreground mt-2">Track attendance, manage grades, and communicate with parents</p>
           </div>
-          <div className="flex gap-3">
-            <Button variant="outline" size="sm">
+          <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+            <Button variant="outline" size="sm" className="w-full sm:w-auto">
               <BookOpen className="mr-2 h-4 w-4" />
               Generate Report
             </Button>
-            <Button className="gradient-primary text-primary-foreground shadow-medium">
+            <Button className="gradient-primary text-primary-foreground shadow-medium w-full sm:w-auto">
               <Bell className="mr-2 h-4 w-4" />
               Send Notifications
             </Button>

@@ -98,7 +98,7 @@ const GradeManagement = () => {
     }
   ];
 
-  const classes = ["Grade 9-A", "Grade 9-B", "Grade 10-A", "Grade 10-B", "Grade 11-A", "Grade 11-B", "Grade 11-C"];
+  const classes = ["Class 1", "Class 2", "Class 3", "Class 4", "Class 5", "Class 6", "Class 7", "Class 8", "Class 9", "Class 10"];
   const subjects = ["Mathematics", "Science", "English", "History", "Geography", "Physics", "Chemistry", "Biology"];
   const testTypes = [
     { value: 'weekly', label: 'Weekly Test' },

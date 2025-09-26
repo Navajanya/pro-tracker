@@ -25,48 +25,62 @@ const AttendanceMarking = () => {
     {
       id: "1",
       name: "Alice Johnson",
-      rollNumber: "10A-001",
+      rollNumber: "10-001",
       status: null,
-      parentPhone: "+1-555-0123"
+      parentPhone: "+91-9876543210"
     },
     {
       id: "2",
       name: "Michael Chen",
-      rollNumber: "10A-002",
+      rollNumber: "10-002",
       status: null,
-      parentPhone: "+1-555-0124"
+      parentPhone: "+91-9876543211"
     },
     {
       id: "3",
       name: "Sarah Williams",
-      rollNumber: "10A-003",
+      rollNumber: "10-003",
       status: null,
-      parentPhone: "+1-555-0125"
+      parentPhone: "+91-9876543212"
     },
     {
       id: "4",
       name: "David Brown",
-      rollNumber: "10A-004",
+      rollNumber: "10-004",
       status: null,
-      parentPhone: "+1-555-0126"
+      parentPhone: "+91-9876543213"
     },
     {
       id: "5",
       name: "Emma Davis",
-      rollNumber: "10A-005",
+      rollNumber: "10-005",
       status: null,
-      parentPhone: "+1-555-0127"
+      parentPhone: "+91-9876543214"
     },
     {
       id: "6",
       name: "James Wilson",
-      rollNumber: "10A-006",
+      rollNumber: "10-006",
       status: null,
-      parentPhone: "+1-555-0128"
+      parentPhone: "+91-9876543215"
+    },
+    {
+      id: "7",
+      name: "Priya Sharma",
+      rollNumber: "10-007",
+      status: null,
+      parentPhone: "+91-9876543216"
+    },
+    {
+      id: "8",
+      name: "Rahul Patel",
+      rollNumber: "10-008",
+      status: null,
+      parentPhone: "+91-9876543217"
     }
   ]);
 
-  const classes = ["Grade 9-A", "Grade 9-B", "Grade 10-A", "Grade 10-B", "Grade 11-A", "Grade 11-B", "Grade 11-C"];
+  const classes = ["Class 1", "Class 2", "Class 3", "Class 4", "Class 5", "Class 6", "Class 7", "Class 8", "Class 9", "Class 10"];
 
   const updateAttendance = (studentId: string, status: 'present' | 'absent' | 'late') => {
     setStudents(prev => prev.map(student => 
@@ -119,18 +133,18 @@ const AttendanceMarking = () => {
     <div className="min-h-screen bg-gradient-subtle p-6">
       <div className="mx-auto max-w-7xl space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">Mark Attendance</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Mark Attendance</h1>
             <p className="text-muted-foreground mt-2">Record daily student attendance</p>
           </div>
-          <div className="flex gap-3">
-            <Button variant="outline" onClick={handleSaveAttendance}>
+          <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+            <Button variant="outline" onClick={handleSaveAttendance} className="w-full sm:w-auto">
               <Save className="mr-2 h-4 w-4" />
               Save Attendance
             </Button>
             <Button 
-              className="gradient-primary text-primary-foreground shadow-medium"
+              className="gradient-primary text-primary-foreground shadow-medium w-full sm:w-auto"
               onClick={handleSendNotifications}
               disabled={absentStudents.length === 0}
             >
@@ -161,7 +175,7 @@ const AttendanceMarking = () => {
                     {selectedDate ? format(selectedDate, "PPP") : "Pick a date"}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
+                <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
                     mode="single"
                     selected={selectedDate}
@@ -251,56 +265,56 @@ const AttendanceMarking = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {students.map((student) => (
                   <Card key={student.id} className="shadow-soft border-2 hover:shadow-medium transition-smooth">
-                    <CardContent className="pt-6">
+                    <CardContent className="pt-4">
                       <div className="flex items-center space-x-3 mb-4">
-                        <Avatar>
+                        <Avatar className="h-10 w-10">
                           <AvatarImage src={`/api/placeholder/40/40`} />
-                          <AvatarFallback>
+                          <AvatarFallback className="text-xs">
                             {student.name.split(' ').map(n => n[0]).join('')}
                           </AvatarFallback>
                         </Avatar>
-                        <div className="flex-1">
-                          <p className="font-medium text-foreground">{student.name}</p>
-                          <p className="text-sm text-muted-foreground">{student.rollNumber}</p>
+                        <div className="flex-1 min-w-0">
+                          <p className="font-medium text-foreground text-sm truncate">{student.name}</p>
+                          <p className="text-xs text-muted-foreground">{student.rollNumber}</p>
                         </div>
                         {student.status && (
-                          <Badge variant={getStatusColor(student.status) as any} className="flex items-center gap-1">
+                          <Badge variant={getStatusColor(student.status) as any} className="flex items-center gap-1 text-xs px-2 py-1">
                             {getStatusIcon(student.status)}
-                            {student.status}
+                            <span className="hidden sm:inline">{student.status}</span>
                           </Badge>
                         )}
                       </div>
                       
-                      <div className="grid grid-cols-3 gap-2">
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                         <Button
                           variant={student.status === 'present' ? 'success' : 'outline'}
                           size="sm"
                           onClick={() => updateAttendance(student.id, 'present')}
-                          className="text-xs"
+                          className="text-xs h-8"
                         >
-                          <UserCheck className="h-3 w-3 mr-1" />
-                          Present
+                          <UserCheck className="h-3 w-3 sm:mr-1" />
+                          <span className="hidden sm:inline">Present</span>
                         </Button>
                         <Button
                           variant={student.status === 'late' ? 'warning' : 'outline'}
                           size="sm"
                           onClick={() => updateAttendance(student.id, 'late')}
-                          className="text-xs"
+                          className="text-xs h-8"
                         >
-                          <Clock className="h-3 w-3 mr-1" />
-                          Late
+                          <Clock className="h-3 w-3 sm:mr-1" />
+                          <span className="hidden sm:inline">Late</span>
                         </Button>
                         <Button
                           variant={student.status === 'absent' ? 'danger' : 'outline'}
                           size="sm"
                           onClick={() => updateAttendance(student.id, 'absent')}
-                          className="text-xs"
+                          className="text-xs h-8"
                         >
-                          <UserX className="h-3 w-3 mr-1" />
-                          Absent
+                          <UserX className="h-3 w-3 sm:mr-1" />
+                          <span className="hidden sm:inline">Absent</span>
                         </Button>
                       </div>
                     </CardContent>

@@ -31,10 +31,10 @@ const StudentManagement = () => {
     {
       id: "1",
       name: "Alice Johnson",
-      class: "Grade 10-A",
-      rollNumber: "10A-001",
+      class: "Class 10",
+      rollNumber: "10-001",
       parentName: "Robert Johnson",
-      parentPhone: "+1-555-0123",
+      parentPhone: "+91-9876543210",
       email: "alice.johnson@school.edu",
       attendance: 96.5,
       status: 'active'
@@ -42,10 +42,10 @@ const StudentManagement = () => {
     {
       id: "2",
       name: "Michael Chen",
-      class: "Grade 9-B",
-      rollNumber: "9B-015",
+      class: "Class 9",
+      rollNumber: "9-015",
       parentName: "Wei Chen",
-      parentPhone: "+1-555-0124",
+      parentPhone: "+91-9876543211",
       email: "michael.chen@school.edu",
       attendance: 89.2,
       status: 'active'
@@ -53,10 +53,10 @@ const StudentManagement = () => {
     {
       id: "3",
       name: "Sarah Williams",
-      class: "Grade 11-C",
-      rollNumber: "11C-008",
+      class: "Class 8",
+      rollNumber: "8-008",
       parentName: "David Williams",
-      parentPhone: "+1-555-0125",
+      parentPhone: "+91-9876543212",
       email: "sarah.williams@school.edu",
       attendance: 98.1,
       status: 'active'
@@ -64,12 +64,34 @@ const StudentManagement = () => {
     {
       id: "4",
       name: "David Brown", 
-      class: "Grade 10-B",
-      rollNumber: "10B-022",
+      class: "Class 7",
+      rollNumber: "7-022",
       parentName: "Lisa Brown",
-      parentPhone: "+1-555-0126",
+      parentPhone: "+91-9876543213",
       email: "david.brown@school.edu",
       attendance: 92.7,
+      status: 'active'
+    },
+    {
+      id: "5",
+      name: "Emma Davis",
+      class: "Class 6",
+      rollNumber: "6-012",
+      parentName: "Mark Davis",
+      parentPhone: "+91-9876543214",
+      email: "emma.davis@school.edu",
+      attendance: 94.3,
+      status: 'active'
+    },
+    {
+      id: "6",
+      name: "James Wilson",
+      class: "Class 5",
+      rollNumber: "5-045",
+      parentName: "Susan Wilson",
+      parentPhone: "+91-9876543215",
+      email: "james.wilson@school.edu",
+      attendance: 91.8,
       status: 'active'
     }
   ];
@@ -81,7 +103,7 @@ const StudentManagement = () => {
     return matchesSearch && matchesClass;
   });
 
-  const classes = ["all", "Grade 9-A", "Grade 9-B", "Grade 10-A", "Grade 10-B", "Grade 11-A", "Grade 11-B", "Grade 11-C"];
+  const classes = ["all", "Class 1", "Class 2", "Class 3", "Class 4", "Class 5", "Class 6", "Class 7", "Class 8", "Class 9", "Class 10"];
 
   const getAttendanceColor = (attendance: number) => {
     if (attendance >= 95) return "success";
@@ -124,13 +146,16 @@ const StudentManagement = () => {
                       <SelectValue placeholder="Select class" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="grade-9a">Grade 9-A</SelectItem>
-                      <SelectItem value="grade-9b">Grade 9-B</SelectItem>
-                      <SelectItem value="grade-10a">Grade 10-A</SelectItem>
-                      <SelectItem value="grade-10b">Grade 10-B</SelectItem>
-                      <SelectItem value="grade-11a">Grade 11-A</SelectItem>
-                      <SelectItem value="grade-11b">Grade 11-B</SelectItem>
-                      <SelectItem value="grade-11c">Grade 11-C</SelectItem>
+                      <SelectItem value="class-1">Class 1</SelectItem>
+                      <SelectItem value="class-2">Class 2</SelectItem>
+                      <SelectItem value="class-3">Class 3</SelectItem>
+                      <SelectItem value="class-4">Class 4</SelectItem>
+                      <SelectItem value="class-5">Class 5</SelectItem>
+                      <SelectItem value="class-6">Class 6</SelectItem>
+                      <SelectItem value="class-7">Class 7</SelectItem>
+                      <SelectItem value="class-8">Class 8</SelectItem>
+                      <SelectItem value="class-9">Class 9</SelectItem>
+                      <SelectItem value="class-10">Class 10</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -168,7 +193,7 @@ const StudentManagement = () => {
             <CardDescription>Find students by name, roll number, or class</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="flex gap-4">
+            <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex-1">
                 <div className="relative">
                   <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
@@ -181,7 +206,7 @@ const StudentManagement = () => {
                 </div>
               </div>
               <Select value={selectedClass} onValueChange={setSelectedClass}>
-                <SelectTrigger className="w-[200px]">
+                <SelectTrigger className="w-full sm:w-[200px]">
                   <SelectValue placeholder="Select class" />
                 </SelectTrigger>
                 <SelectContent>
@@ -196,8 +221,8 @@ const StudentManagement = () => {
           </CardContent>
         </Card>
 
-        {/* Students Table */}
-        <Card className="shadow-soft">
+        {/* Students Table - Desktop */}
+        <Card className="shadow-soft hidden md:block">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-foreground">
               <User className="h-5 w-5 text-primary" />
@@ -206,74 +231,139 @@ const StudentManagement = () => {
             <CardDescription>Manage student information and contact details</CardDescription>
           </CardHeader>
           <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Student</TableHead>
-                  <TableHead>Class</TableHead>
-                  <TableHead>Roll Number</TableHead>
-                  <TableHead>Parent Contact</TableHead>
-                  <TableHead>Attendance</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredStudents.map((student) => (
-                  <TableRow key={student.id}>
-                    <TableCell>
-                      <div className="flex items-center space-x-3">
-                        <Avatar>
-                          <AvatarImage src={`/api/placeholder/40/40`} />
-                          <AvatarFallback>
-                            {student.name.split(' ').map(n => n[0]).join('')}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <p className="font-medium text-foreground">{student.name}</p>
-                          <p className="text-sm text-muted-foreground">{student.email}</p>
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant="outline">{student.class}</Badge>
-                    </TableCell>
-                    <TableCell className="font-mono text-sm">{student.rollNumber}</TableCell>
-                    <TableCell>
-                      <div className="space-y-1">
-                        <p className="text-sm font-medium text-foreground">{student.parentName}</p>
-                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                          <Phone className="h-3 w-3" />
-                          {student.parentPhone}
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant={getAttendanceColor(student.attendance) as any}>
-                        {student.attendance}%
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant={student.status === 'active' ? 'default' : 'secondary'}>
-                        {student.status}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex gap-2">
-                        <Button variant="ghost" size="sm">
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                        <Button variant="ghost" size="sm">
-                          <Mail className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </TableCell>
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Student</TableHead>
+                    <TableHead>Class</TableHead>
+                    <TableHead>Roll Number</TableHead>
+                    <TableHead>Parent Contact</TableHead>
+                    <TableHead>Attendance</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Actions</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {filteredStudents.map((student) => (
+                    <TableRow key={student.id}>
+                      <TableCell>
+                        <div className="flex items-center space-x-3">
+                          <Avatar>
+                            <AvatarImage src={`/api/placeholder/40/40`} />
+                            <AvatarFallback>
+                              {student.name.split(' ').map(n => n[0]).join('')}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div>
+                            <p className="font-medium text-foreground">{student.name}</p>
+                            <p className="text-sm text-muted-foreground">{student.email}</p>
+                          </div>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant="outline">{student.class}</Badge>
+                      </TableCell>
+                      <TableCell className="font-mono text-sm">{student.rollNumber}</TableCell>
+                      <TableCell>
+                        <div className="space-y-1">
+                          <p className="text-sm font-medium text-foreground">{student.parentName}</p>
+                          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                            <Phone className="h-3 w-3" />
+                            {student.parentPhone}
+                          </div>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant={getAttendanceColor(student.attendance) as any}>
+                          {student.attendance}%
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant={student.status === 'active' ? 'default' : 'secondary'}>
+                          {student.status}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex gap-2">
+                          <Button variant="ghost" size="sm">
+                            <Edit className="h-4 w-4" />
+                          </Button>
+                          <Button variant="ghost" size="sm">
+                            <Mail className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
           </CardContent>
         </Card>
+
+        {/* Students Cards - Mobile */}
+        <div className="grid gap-4 md:hidden">
+          {filteredStudents.map((student) => (
+            <Card key={student.id} className="shadow-soft">
+              <CardContent className="pt-6">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-center space-x-3">
+                    <Avatar>
+                      <AvatarImage src={`/api/placeholder/40/40`} />
+                      <AvatarFallback>
+                        {student.name.split(' ').map(n => n[0]).join('')}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p className="font-medium text-foreground">{student.name}</p>
+                      <p className="text-sm text-muted-foreground">{student.email}</p>
+                      <Badge variant="outline" className="mt-1">{student.class}</Badge>
+                    </div>
+                  </div>
+                  <Badge variant={student.status === 'active' ? 'default' : 'secondary'}>
+                    {student.status}
+                  </Badge>
+                </div>
+                
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Roll Number:</span>
+                    <span className="font-mono">{student.rollNumber}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Parent:</span>
+                    <span>{student.parentName}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Phone:</span>
+                    <span className="flex items-center gap-1">
+                      <Phone className="h-3 w-3" />
+                      {student.parentPhone}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center pt-2 border-t">
+                    <span className="text-muted-foreground">Attendance:</span>
+                    <Badge variant={getAttendanceColor(student.attendance) as any}>
+                      {student.attendance}%
+                    </Badge>
+                  </div>
+                </div>
+                
+                <div className="flex gap-2 mt-4">
+                  <Button variant="ghost" size="sm" className="flex-1">
+                    <Edit className="h-4 w-4 mr-2" />
+                    Edit
+                  </Button>
+                  <Button variant="ghost" size="sm" className="flex-1">
+                    <Mail className="h-4 w-4 mr-2" />
+                    Contact
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
     </div>
   );
